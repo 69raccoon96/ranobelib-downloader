@@ -158,7 +158,7 @@ class Fb2Creator(ContentProcessor):
 
         total_volumes = self.get_total_volume_count(novel_info)
 
-        print("📦 Создание FB2...")
+        print("Создание FB2...")
         for i, prep in enumerate(prepared_chapters, 1):
             ch_name = self.parser.decode_html_entities(prep.get("name", "").strip())
             vol_num = str(prep["volume"])
