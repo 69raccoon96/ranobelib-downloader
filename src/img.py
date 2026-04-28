@@ -41,7 +41,7 @@ class ImageHandler:
         try:
             content, content_type = self._fetch_image(url)
         except requests.exceptions.RequestException as e:
-            print(f"\n⚠️ Ошибка при скачивании изображения {url}: {e}")
+            print(f"\n Ошибка при скачивании изображения {url}: {e}")
             return None
 
         ext = self._get_extension_from_content_type(content_type)
@@ -73,7 +73,7 @@ class ImageHandler:
             try:
                 os.replace(processed_path, final_path)
             except OSError as e:
-                print(f"\n⚠️ Не удалось заменить изображение {processed_path} -> {final_path}: {e}")
+                print(f"\nНе удалось заменить изображение {processed_path} -> {final_path}: {e}")
                 if os.path.exists(processed_path):
                     try:
                         os.remove(processed_path)
@@ -132,7 +132,7 @@ class ImageHandler:
                     os.remove(filepath)
                 filepath = new_filepath
             except Exception as e:
-                print(f"\n⚠️ Не удалось конвертировать {filepath} в JPG: {e}")
+                print(f"\nНе удалось конвертировать {filepath} в JPG: {e}")
 
         if settings.get("compress_images"):
             try:
@@ -145,7 +145,7 @@ class ImageHandler:
                         resized_img = img.resize(new_size, resample_filter)
                         resized_img.save(filepath, quality=90)
             except Exception as e:
-                print(f"\n⚠️ Не удалось изменить размер изображения {filepath}: {e}")
+                print(f"\nНе удалось изменить размер изображения {filepath}: {e}")
 
         return filepath
 
@@ -155,5 +155,5 @@ class ImageHandler:
             with open(filepath, "rb") as f:
                 return hashlib.md5(f.read()).hexdigest()
         except OSError as e:
-            print(f"\n⚠️ Не удалось вычислить хэш изображения {filepath}: {e}")
-            return None 
+            print(f"\nНе удалось вычислить хэш изображения {filepath}: {e}")
+            return None

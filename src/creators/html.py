@@ -34,7 +34,7 @@ class HtmlCreator(ContentProcessor):
         )
         cover_filename = self.download_cover(novel_info, image_folder)
 
-        print(f"📦 Создание {self.format_name}...")
+        print(f"Создание {self.format_name}...")
 
         full_html = self._build_html_content(
             novel_info, prepared_chapters, cover_filename, image_folder
@@ -84,9 +84,9 @@ class HtmlCreator(ContentProcessor):
         --border-color: #444; --summary-bg: #2a2a2a; --summary-border: #555;
         --button-bg: #333; --button-shadow: rgba(255,255,255,0.1);
     }
-    body { 
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
-        line-height: 1.6; padding: 1em; max-width: 800px; margin: auto; 
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6; padding: 1em; max-width: 800px; margin: auto;
         background-color: var(--bg-color); color: var(--text-color); transition: background-color 0.3s, color 0.3s;
     }
     body.toc-is-open {
@@ -102,7 +102,7 @@ class HtmlCreator(ContentProcessor):
     .chapter-title { font-size: 1.5em; font-weight: bold; }
     p { margin: 1em 0; }
     img { max-width: 100%; height: auto; display: block; margin: 1em auto; border-radius: 4px; }
-    
+
     #toc-sidebar {
         position: fixed; top: 0; left: 0; height: 100%; width: 300px;
         background-color: var(--bg-color); border-right: 1px solid var(--border-color);
@@ -144,7 +144,7 @@ class HtmlCreator(ContentProcessor):
         display: none;
     }
     .toc-volume-chapters.open { display: block; }
-    
+
     #toc-overlay {
         display: none; position: fixed; top: 0; left: 0;
         width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;
@@ -343,7 +343,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(toggleTOC, 100);
         });
     });
-    
+
     tocSidebar.querySelectorAll('.toc-volume-header').forEach(header => {
         header.addEventListener('click', () => {
             header.classList.toggle('open');
@@ -401,6 +401,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     encoded_string = base64.b64encode(f.read()).decode("utf-8")
                 img["src"] = f"data:{mime_type};base64,{encoded_string}"
             else:
-                print(f"⚠️ Изображение не найдено для встраивания: {image_path}")
+                print(f"Изображение не найдено для встраивания: {image_path}")
 
-        return str(soup) 
+        return str(soup)

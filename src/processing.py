@@ -46,7 +46,7 @@ class ContentProcessor:
         if cache_key in self._global_cache:
             return self._global_cache[cache_key]
 
-        print("🔄 Обработка глав...")
+        print(" Обработка глав...")
         filtered = self._filter_chapters(chapters_data, selected_branch_id)
 
         from tqdm import tqdm
@@ -376,4 +376,4 @@ class ContentProcessor:
             if isinstance(p_tag, Tag) and p_tag.has_attr("data-paragraph-index"):  # type: ignore[attr-defined]
                 del p_tag["data-paragraph-index"]  # type: ignore[index]
 
-        return str(soup) 
+        return str(soup)

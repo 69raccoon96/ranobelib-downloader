@@ -206,12 +206,12 @@ class Fb2Creator(ContentProcessor):
         for filename in referenced_images:
             image_path = os.path.join(image_folder, filename)
             if not os.path.exists(image_path):
-                print(f"⚠️ Изображение {filename} не найдено, пропуск.")
+                print(f"Изображение {filename} не найдено, пропуск.")
                 continue
             try:
                 mime, data_b64 = self._encode_image(image_path)
                 binaries_parts.append(f'<binary id="{filename}" content-type="{mime}">{data_b64}</binary>')
             except Exception as e:
-                print(f"⚠️ Не удалось добавить изображение {filename} в FB2: {e}")
+                print(f"Не удалось добавить изображение {filename} в FB2: {e}")
 
-        return "\n".join(binaries_parts) 
+        return "\n".join(binaries_parts)

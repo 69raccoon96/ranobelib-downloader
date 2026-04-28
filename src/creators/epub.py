@@ -124,7 +124,7 @@ class EpubCreator(ContentProcessor):
 
         total_volumes = self.get_total_volume_count(novel_info)
 
-        print("📦 Создание EPUB...")
+        print("Создание EPUB...")
         for i, prep in enumerate(prepared_chapters):
             ch_name = self.parser.decode_html_entities(prep.get("name", "").strip())
             vol_num = str(prep["volume"])
@@ -172,7 +172,7 @@ class EpubCreator(ContentProcessor):
             if filename.lower().endswith((".png", ".jpg", ".jpeg", ".gif")):
                 image_path = os.path.join(image_folder, filename)
                 if not os.path.exists(image_path):
-                    print(f"⚠️ Изображение {filename} не найдено, пропуск.")
+                    print(f"Изображение {filename} не найдено, пропуск.")
                     continue
                 with open(image_path, "rb") as img_file:
                     ext = os.path.splitext(filename)[1][1:].replace("jpg", "jpeg")
@@ -182,4 +182,4 @@ class EpubCreator(ContentProcessor):
                         media_type=f"image/{ext}",
                         content=img_file.read(),
                     )
-                    book.add_item(image_item) 
+                    book.add_item(image_item)

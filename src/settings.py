@@ -41,7 +41,7 @@ class Settings:
             else:
                 self._settings = self._defaults.copy()
         except Exception as e:
-            print(f"⚠️ Ошибка при загрузке настроек: {e}")
+            print(f" Ошибка при загрузке настроек: {e}")
             self._settings = self._defaults.copy()
 
     def save(self) -> None:
@@ -50,7 +50,7 @@ class Settings:
             with open(self._settings_file, "w", encoding="utf-8") as f:
                 json.dump(self._settings, f, ensure_ascii=False, indent=2)
         except Exception as e:
-            print(f"⚠️ Ошибка при сохранении настроек: {e}")
+            print(f" Ошибка при сохранении настроек: {e}")
 
     def get(self, key: str, default: Any = None) -> Any:
         """Получение значения настройки"""
@@ -91,4 +91,4 @@ class Settings:
         return settings_copy
 
 
-settings = Settings() 
+settings = Settings()

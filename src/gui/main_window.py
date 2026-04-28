@@ -163,17 +163,17 @@ class MainWindow(QMainWindow):
         self.load_button.setVisible(False)
         self.load_button.setCursor(Qt.CursorShape.ArrowCursor)
         self.load_button.setFixedSize(22, 22)
-        
+
         def position_load_button():
             button_y = (self.url_input.height() - self.load_button.height()) // 2
             button_x = self.url_input.width() - self.load_button.width() - 3
             self.load_button.move(button_x, button_y)
-        
+
         self.url_input.resizeEvent = lambda event: (
             QLineEdit.resizeEvent(self.url_input, event),
             position_load_button()
         )[1]
-        
+
         self._position_load_button = position_load_button
 
         address_layout.addWidget(self.url_input)
@@ -381,7 +381,7 @@ class MainWindow(QMainWindow):
                     thumb_b64 = base64.b64encode(response.content).decode("ascii")
                     self._cover_thumb_cache[cover_url] = thumb_b64
                 except Exception as e:
-                    print(f"⚠️ Не удалось загрузить миниатюру обложки: {e}")
+                    print(f"Не удалось загрузить миниатюру обложки: {e}")
                     thumb_b64 = None
 
         tooltip_html = ""
@@ -469,4 +469,4 @@ class MainWindow(QMainWindow):
     def closeEvent(self, event):
         """Обработка закрытия приложения"""
         self._save_settings()
-        super().closeEvent(event) 
+        super().closeEvent(event)

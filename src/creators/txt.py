@@ -31,7 +31,7 @@ class TxtCreator(ContentProcessor):
             novel_info, chapters_data, selected_branch_id, image_folder
         )
 
-        print(f"📦 Создание {self.format_name}...")
+        print(f"Создание {self.format_name}...")
 
         full_text = self._build_text_content(novel_info, prepared_chapters)
 
@@ -104,4 +104,4 @@ class TxtCreator(ContentProcessor):
         non_empty_lines = [line for line in lines if line]
         clean_text = "\n".join(non_empty_lines)
 
-        return re.sub(r"\n{3,}", "\n\n", clean_text) 
+        return re.sub(r"\n{3,}", "\n\n", clean_text)

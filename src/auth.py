@@ -58,10 +58,10 @@ class RanobeLibAuth:
         if token_data and "access_token" in token_data:
             self.api.set_token(token_data["access_token"])
             self.save_token(token_data)
-            print("✅ Токен успешно получен")
+            print(" Токен успешно получен")
             return token_data["access_token"]
         else:
-            print("⚠️ Ответ не содержит access_token")
+            print(" Ответ не содержит access_token")
             return None
 
     def authorize_with_webview(self) -> Optional[str]:
@@ -77,7 +77,7 @@ class RanobeLibAuth:
             with open(self.token_path, "w", encoding="utf-8") as f:
                 json.dump(token_data, f, indent=2)
         except OSError as e:
-            print(f"⚠️ Не удалось сохранить токен в файл: {e}")
+            print(f" Не удалось сохранить токен в файл: {e}")
 
     def logout(self) -> None:
         """Выход из системы: удаление токена и очистка данных."""
@@ -85,9 +85,9 @@ class RanobeLibAuth:
         if os.path.exists(self.token_path):
             try:
                 os.remove(self.token_path)
-                print("🗑️ Файл токена удален.")
+                print("Файл токена удален.")
             except OSError as e:
-                print(f"⚠️ Не удалось удалить файл токена: {e}")
+                print(f"Не удалось удалить файл токена: {e}")
 
     def load_token(self) -> Optional[Dict[str, Any]]:
         """Загрузка сохранённых данных аутентификации, если они существуют."""
@@ -97,7 +97,7 @@ class RanobeLibAuth:
                     token_data = json.load(f)
                     return token_data
             except (OSError, json.JSONDecodeError) as e:
-                print(f"⚠️ Не удалось загрузить сохранённый токен: {e}")
+                print(f"Не удалось загрузить сохранённый токен: {e}")
         return None
 
     def refresh_token(self) -> bool:
@@ -108,7 +108,7 @@ class RanobeLibAuth:
 
         refresh_token_str = token_data["refresh_token"]
 
-        print("🔄 Обновление токена...")
+        print("Обновление токена...")
         token_url = "https://api.cdnlibs.org/api/auth/oauth/token"
         payload = {
             "grant_type": "refresh_token",
@@ -121,22 +121,22 @@ class RanobeLibAuth:
             response = self.api.session.post(token_url, json=payload, headers=headers, timeout=10)
 
             if response.status_code == 400:
-                print("⚠️ Refresh-токен недействителен. Требуется повторная авторизация.")
+                print("Refresh-токен недействителен. Требуется повторная авторизация.")
                 return False
 
             response.raise_for_status()
             new_token_data = response.json()
 
             if "access_token" in new_token_data:
-                print("✅ Токен успешно обновлён")
+                print("Токен успешно обновлён")
                 self.api.set_token(new_token_data["access_token"])
                 self.save_token(new_token_data)
                 return True
             else:
-                print("⚠️ Ответ при обновлении токена не содержит access_token")
+                print("Ответ при обновлении токена не содержит access_token")
                 return False
         except requests.exceptions.RequestException as e:
-            print(f"⚠️ Не удалось обновить токен: {e}")
+            print(f"Не удалось обновить токен: {e}")
             return False
 
     def validate_token(self) -> Optional[Dict[str, Any]]:
@@ -159,7 +159,7 @@ class RanobeLibAuth:
 
     def _get_authorization_code(self, challenge_url: str, redirect_uri: str) -> Optional[str]:
         """Открытие webview для получения кода авторизации."""
-        print("🔐 Открываем окно авторизации...")
+        print("Открываем окно авторизации...")
 
         auth_code_container: Dict[str, Optional[str]] = {"code": None}
         window_ready = threading.Event()
@@ -205,7 +205,7 @@ class RanobeLibAuth:
         webview.start(gui="edgechromium")
 
         if not auth_code_container["code"]:
-            print("⚠️ Не удалось получить код авторизации. Вход отменён.")
+            print("Не удалось получить код авторизации. Вход отменён.")
         return auth_code_container["code"]
 
     def _exchange_code_for_token(
@@ -227,5 +227,5 @@ class RanobeLibAuth:
             response.raise_for_status()
             return response.json()
         except requests.exceptions.RequestException as e:
-            print(f"⚠️ Не удалось получить токен: {e}")
-            return None 
+            print(f"Не удалось получить токен: {e}")
+            return None

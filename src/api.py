@@ -202,10 +202,10 @@ class RanobeLibAPI:
                 is_long_delay = delay >= 30
 
                 if is_long_delay:
-                    print(f"\n⚠️ Ошибка соединения: {e}. Следующая попытка через {delay} секунд...")
+                    print(f"\n Ошибка соединения: {e}. Следующая попытка через {delay} секунд...")
 
                 if is_last_attempt:
-                    print(f"❌ Соединение не установлено: {e}. Проверьте подключение к сети или попробуйте позже.")
+                    print(f" Соединение не установлено: {e}. Проверьте подключение к сети или попробуйте позже.")
                     raise
 
                 self._interruptible_sleep(delay)
@@ -218,12 +218,12 @@ class RanobeLibAPI:
             response = self.session.get(url, params=params, timeout=REQUEST_TIMEOUT)
 
             if response.status_code == 401 and self.token_refresh_callback:
-                print("\n🔑 Токен недействителен. Попытка обновления...")
+                print("\n Токен недействителен. Попытка обновления...")
                 if self.token_refresh_callback():
-                    print("✅ Токен обновлен. Повторяем запрос...")
+                    print(" Токен обновлен. Повторяем запрос...")
                     response = self.session.get(url, params=params, timeout=REQUEST_TIMEOUT)
                 else:
-                    print("⚠️ Не удалось обновить токен.")
+                    print(" Не удалось обновить токен.")
 
             if response.status_code == 404:
                 try:
@@ -234,5 +234,5 @@ class RanobeLibAPI:
             response.raise_for_status()
             return response.json()
         except requests.exceptions.JSONDecodeError:
-            print(f"⚠️ Ошибка декодирования JSON ответа для URL: {url}")
-            raise 
+            print(f" Ошибка декодирования JSON ответа для URL: {url}")
+            raise
