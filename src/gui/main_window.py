@@ -348,7 +348,24 @@ class MainWindow(QMainWindow):
                 details_html += f"<p><b>Теги:</b> {tags_text}</p>"
 
         raw_summary = self.novel_info.get("summary", "Описание отсутствует.")
+        if not raw_summary:
+            raw_summary = "Описание отсутствует."
+        elif isinstance(raw_summary, dict):
+            # Часто API возвращает пустой словарь {}, если описание отсутствует
+            if not raw_summary:
+                raw_summary = "Описание отсутствует."
+            else:
+                # Если словарь не пустой, пытаемся вытащить текст
+                raw_summary = raw_summary.get("text") or raw_summary.get("html") or str(raw_summary)
+        else:
+            raw_summary = str(raw_summary)
+
         decoded_summary = self.parser.decode_html_entities(raw_summary)
+
+        # На всякий случай гарантируем, что на выходе точно строка
+        if not isinstance(decoded_summary, str):
+            decoded_summary = str(decoded_summary)
+
         summary = decoded_summary.replace("\n", "<br>")
         details_html += f'<div style="margin-top: 10px;"><b>Описание:</b><br/>{summary}</div>'
 

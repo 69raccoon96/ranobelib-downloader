@@ -34,6 +34,12 @@ class Fb2Creator(ContentProcessor):
         selected_branch_id: Optional[str] = None,
     ) -> str:
         """Создание FB2-файла с главами новеллы."""
+
+        # Исправляем описание (summary), если это словарь, чтобы избежать ошибки .strip()
+        raw_summary = novel_info.get("summary")
+        if isinstance(raw_summary, dict):
+            novel_info["summary"] = raw_summary.get("text") or raw_summary.get("html") or ""
+
         _, image_folder = self.prepare_dirs(novel_info.get("id"))
 
         prepared_chapters = self.prepare_chapters(
